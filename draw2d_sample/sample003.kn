@@ -1,14 +1,13 @@
-var dc: dc@DC
-var lineBrush: dc@Brush
-var rectBrush1: dc@Brush
-var rectBrush2: dc@Brush
-var circleBrush1: dc@Brush
-var circleBrush2: dc@Brush
-var icecreamBrush: dc@Brush
-var cornBrush: dc@Brush
-var geo917Brush: dc@Brush
-var icecream: dc@PathGeometry
-var geo917: dc@PathGeometry
+var lineBrush: draw2d@Brush
+var rectBrush1: draw2d@Brush
+var rectBrush2: draw2d@Brush
+var circleBrush1: draw2d@Brush
+var circleBrush2: draw2d@Brush
+var icecreamBrush: draw2d@Brush
+var cornBrush: draw2d@Brush
+var geo917Brush: draw2d@Brush
+var icecream: draw2d@GeometryPath
+var geo917: draw2d@GeometryPath
 
 func main()
 	var wnd: wnd@Wnd :: wnd@makeWnd(null, %aspect, 800, 600,
@@ -16,78 +15,79 @@ func main()
 	var draw: wnd@Draw :: wnd@makeDraw(wnd, 0, 0, 800, 600,
 	|%scale, %scale, false)
 	
-	do @icecream :: dc@makePathGeometry()
-	var sink: dc@GeometrySink :: @icecream.open()
-	do sink.beginFigure(250.0, 250.0, %filled)
-	do sink.addArc(50.0, 250.0, 100.0, 100.0, lib@pi,
-	|%counterClockwise, %small)
-	do sink.endFigure(%closed)
-	do sink.close()
+	do @icecream :: draw2d@makeGeometryPath()
+	do @icecream.open()
+	do @icecream.openFigure(250.0, 250.0, true)
+	do @icecream.addArc(50.0, 250.0, 100.0, 100.0, lib@pi,
+	|true, false)
+	do @icecream.closeFigure(true)
+	do @icecream.close()
 	
-	do @geo917 :: dc@makePathGeometry()
-	do sink :: @geo917.open()
-	do sink.beginFigure(370.0, 250.0, %hollow)
-	do sink.addBezier(360.0, 200.0, 220.0, 220.0, 270.0, 270.0)
-	do sink.addQuadraticBezier(300.0, 300.0, 368.0, 255.0)
-	do sink.addLine(290.0, 400.0)
-	do sink.endFigure(%open)
-	do sink.beginFigure(460.0, 225.0, %hollow)
-	do sink.addLine(370.0, 400.0)
-	do sink.endFigure(%open)
-	do sink.beginFigure(500.0, 230.0, %hollow)
-	do sink.addLine(610.0, 230.0)
-	do sink.addQuadraticBezier(520.0, 270.0, 480.0, 400.0)
-	do sink.endFigure(%open)
-	do sink.close()
+	do @geo917 :: draw2d@makeGeometryPath()
+	do @geo917.open()
+	do @geo917.openFigure(370.0, 250.0, false)
+	do @geo917.addBezier(360.0, 200.0, 220.0, 220.0, 270.0, 270.0)
+	do @geo917.addQuadraticBezier(300.0, 300.0, 368.0, 255.0)
+	do @geo917.addLine(290.0, 400.0)
+	do @geo917.closeFigure(false)
+	do @geo917.openFigure(460.0, 225.0, false)
+	do @geo917.addLine(370.0, 400.0)
+	do @geo917.closeFigure(false)
+	do @geo917.openFigure(500.0, 230.0, false)
+	do @geo917.addLine(610.0, 230.0)
+	do @geo917.addQuadraticBezier(520.0, 270.0, 480.0, 400.0)
+	do @geo917.closeFigure(false)
+	do @geo917.close()
 	
-	do @dc :: dc@makeDC(draw)
-	do @lineBrush :: @dc.makeLinearGradientBrush(
+	do @lineBrush :: draw2d@makeBrushLinearGradient(
 	|20.0, 20.0, 200.0, 100.0,
 	|[0.0, 0.5, 1.0],
-	|[0xFFFF4444, 0xFFFFCCCC, 0xFFFF4444],
-	|%normal, %clamp)
-	do @rectBrush1 :: @dc.makeLinearGradientBrush(
+	|[0xFFFF4444, 0xFFFFCCCC, 0xFFFF4444])
+	do @rectBrush1 :: draw2d@makeBrushLinearGradient(
 	|250.0, 50.0, 400.0, 50.0,
 	|[0.0, 1.0],
-	|[0xFFFFFFFF, 0xFF888888],
-	|%normal, %clamp)
-	do @rectBrush2 :: @dc.makeLinearGradientBrush(
+	|[0xFFFFFFFF, 0xFF888888])
+	do @rectBrush2 :: draw2d@makeBrushLinearGradient(
 	|250.0, 50.0, 400.0, 50.0,
 	|[0.0, 1.0],
-	|[0xFF888888, 0xFF000000],
-	|%normal, %clamp)
-	do @circleBrush1 :: @dc.makeLinearGradientBrush(
+	|[0xFF888888, 0xFF000000])
+	do @circleBrush1 :: draw2d@makeBrushLinearGradient(
 	|500.0, 50.0, 500.0, 150.0,
 	|[0.0, 1.0],
-	|[0xFFFF0000, 0xFF0000FF],
-	|%normal, %clamp)
-	do @circleBrush2 :: @dc.makeLinearGradientBrush(
+	|[0xFFFF0000, 0xFF0000FF])
+	do @circleBrush2 :: draw2d@makeBrushLinearGradient(
 	|500.0, 50.0, 500.0, 150.0,
 	|[0.0, 1.0],
-	|[0xFFFF0000, 0xFF0000FF],
-	|%linear, %clamp)
-	do @icecreamBrush :: @dc.makeLinearGradientBrush(
+	|[0xFFFF0000, 0xFF0000FF])
+	do @icecreamBrush :: draw2d@makeBrushLinearGradient(
 	|50.0, 180.0, 250.0, 220.0,
 	|[0.0, 0.45, 1.0],
-	|[0xFFAAFFBB, 0xFFFFFFCC, 0xFFFFCCCC],
-	|%linear, %clamp)
-	do @cornBrush :: @dc.makeLinearGradientBrush(
-	|200.0, 200.0, 202.0, 210.0,
-	|[0.0, 1.0],
-	|[0xFFDDCC88, 0xFF998844],
-	|%normal, %mirror)
-	do @geo917Brush :: @dc.makeLinearGradientBrush(
+	|[0xFFAAFFBB, 0xFFFFFFCC, 0xFFFFCCCC])
+	do @cornBrush :: draw2d@makeBrushLinearGradient(
+	|200.0, 200.0, 200.0, 600.0,
+	|@divide(0.0, 1.0, 40),
+	|[0xFFDDCC88, 0xFF998844].repeat(20))
+	do @geo917Brush :: draw2d@makeBrushLinearGradient(
 	|600.0, 200.0, 200.0, 500.0,
 	|[0.0, 0.48, 1.0],
-	|[0xFFBBBBFF, 0xFF0000CC, 0xFFCCCCFF],
-	|%linear, %clamp)
+	|[0xFFBBBBFF, 0xFF0000CC, 0xFFCCCCFF])
 	do draw.onPaint :: @onPaint
+	do draw.paint()
 	while(wnd@act())
 	end while
 end func
 
+func divide(sx: float, ex: float, div: int): []float
+	var ary: []float :: #[div]float
+	do ary[0] :: sx
+	do ary[div - 1] :: ex
+	for i(1, div - 2)
+		do ary[i] :: sx + (ex - sx) * i $ float / (div - 1) $ float
+	end for
+	ret ary
+end func
+
 func onPaint(wnd: wnd@Wnd, width: int, height: int)
-	do @dc.beginDraw()
 	; k
 	do @lineBrush.line(20.0, 20.0, 20.0, 100.0, 3.0, null)
 	do @lineBrush.line(60.0, 40.0, 16.0, 80.0, 3.0, null)
@@ -109,10 +109,9 @@ func onPaint(wnd: wnd@Wnd, width: int, height: int)
 	do @circleBrush1.circle(500.0, 100.0, 50.0, 50.0)
 	do @circleBrush2.circleLine(500.0, 100.0, 50.0, 50.0, 10.0, null)
 	
-	do @icecreamBrush.geometry(@icecream)
+	do @icecreamBrush.draw(@icecream)
 	do @cornBrush.tri(50.0, 250.0, 250.0, 250.0, 150.0, 500.0)
 	
-	do @geo917Brush.geometryLine(@geo917, 10.0, null)
-	
-	do @dc.endDraw()
+	do @geo917Brush.drawLine(@geo917, 10.0)
+	do draw@render(0)
 end func
