@@ -1,9 +1,8 @@
-var dc: dc@DC
 var pink: int :: 0xFFFF8888
-var drum: dc@PathGeometry
-var tower: dc@PathGeometry
-var pacman: dc@PathGeometry
-var pacmanLine: dc@PathGeometry
+var drum: draw2d@GeometryPath
+var tower: draw2d@GeometryPath
+var pacman: draw2d@GeometryPath
+var pacmanLine: draw2d@GeometryPath
 
 func main()
 	var wnd: wnd@Wnd :: wnd@makeWnd(null, %aspect, 800, 600,
@@ -11,93 +10,93 @@ func main()
 	var draw: wnd@Draw :: wnd@makeDraw(wnd, 0, 0, 800, 600,
 	|%scale, %scale, false)
 	
-	do @drum :: dc@makePathGeometry()
-	var sink: dc@GeometrySink :: @drum.open()
-	do sink.beginFigure(440.0, 20.0, %filled)
-	do sink.addLine(540.0, 20.0)
-	do sink.addBezier(490.0, 20.0, 490.0, 120.0, 540.0, 120.0)
-	do sink.addLine(440.0, 120.0)
-	do sink.addBezier(490.0, 120.0, 490.0, 20.0, 440.0, 20.0)
-	do sink.endFigure(%closed)
-	do sink.close()
+	do @drum :: draw2d@makeGeometryPath()
+	do @drum.open()
+	do @drum.openFigure(440.0, 20.0, true)
+	do @drum.addLine(540.0, 20.0)
+	do @drum.addBezier(490.0, 20.0, 490.0, 120.0, 540.0, 120.0)
+	do @drum.addLine(440.0, 120.0)
+	do @drum.addBezier(490.0, 120.0, 490.0, 20.0, 440.0, 20.0)
+	do @drum.closeFigure(true)
+	do @drum.close()
 	
-	do @tower :: dc@makePathGeometry()
-	do sink :: @tower.open()
-	do sink.beginFigure(620.0, 20.0, %filled)
-	do sink.addLine(660.0, 120.0)
-	do sink.addQuadraticBezier(620.0, 80.0, 580.0, 120.0)
-	do sink.addLine(620.0, 20.0)
-	do sink.endFigure(%closed)
-	do sink.close()
+	do @tower :: draw2d@makeGeometryPath()
+	do @tower.open()
+	do @tower.openFigure(620.0, 20.0, true)
+	do @tower.addLine(660.0, 120.0)
+	do @tower.addQuadraticBezier(620.0, 80.0, 580.0, 120.0)
+	do @tower.addLine(620.0, 20.0)
+	do @tower.closeFigure(true)
+	do @tower.close()
 	
-	do @pacman :: dc@makePathGeometry()
-	do sink :: @pacman.open()
-	do sink.beginFigure(730.0, 70.0, %filled)
-	do sink.addLine(680.0, 70.0)
-	do sink.addArc(
+	do @pacman :: draw2d@makeGeometryPath()
+	do @pacman.open()
+	do @pacman.openFigure(730.0, 70.0, true)
+	do @pacman.addLine(680.0, 70.0)
+	do @pacman.addArc(
 	|730.0 + 50.0 / lib@sqrt(2.0), 70.0 - 50.0 / lib@sqrt(2.0),
-	|50.0, 50.0, -0.75 * lib@pi, %clockwise, %small)
-	do sink.addLine(730.0, 70.0)
-	do sink.endFigure(%closed)
-	do sink.beginFigure(730.0, 70.0, %filled)
-	do sink.addLine(680.0, 70.0)
-	do sink.addArc(
+	|50.0, 50.0, -0.75 * lib@pi, false, false)
+	do @pacman.addLine(730.0, 70.0)
+	do @pacman.closeFigure(true)
+	do @pacman.openFigure(730.0, 70.0, true)
+	do @pacman.addLine(680.0, 70.0)
+	do @pacman.addArc(
 	|730.0 + 50.0 / lib@sqrt(2.0), 70.0 + 50.0 / lib@sqrt(2.0),
-	|50.0, 50.0, 0.75 * lib@pi, %counterClockwise, %small)
-	do sink.endFigure(%closed)
-	do sink.close()
+	|50.0, 50.0, 0.75 * lib@pi, true, false)
+	do @pacman.closeFigure(true)
+	do @pacman.close()
 	
-	do @pacmanLine :: dc@makePathGeometry()
-	do sink :: @pacmanLine.open()
-	do sink.beginFigure(680.0, 70.0, %hollow)
-	do sink.addArc(
+	do @pacmanLine :: draw2d@makeGeometryPath()
+	do @pacmanLine.open()
+	do @pacmanLine.openFigure(680.0, 70.0, false)
+	do @pacmanLine.addArc(
 	|730.0 + 50.0 / lib@sqrt(2.0), 70.0 - 50.0 / lib@sqrt(2.0),
-	|50.0, 50.0, -0.75 * lib@pi, %clockwise, %small)
-	do sink.addLine(730.0, 70.0)
-	do sink.endFigure(%open)
-	do sink.beginFigure(680.0, 70.0, %hollow)
-	do sink.addArc(
+	|50.0, 50.0, -0.75 * lib@pi, false, false)
+	do @pacmanLine.addLine(730.0, 70.0)
+	do @pacmanLine.closeFigure(false)
+	do @pacmanLine.openFigure(680.0, 70.0, false)
+	do @pacmanLine.addArc(
 	|730.0 + 50.0 / lib@sqrt(2.0), 70.0 + 50.0 / lib@sqrt(2.0),
-	|50.0, 50.0, 0.75 * lib@pi, %counterClockwise, %small)
-	do sink.addLine(730.0, 70.0)
-	do sink.endFigure(%open)
-	do sink.close()
+	|50.0, 50.0, 0.75 * lib@pi, true, false)
+	do @pacmanLine.addLine(730.0, 70.0)
+	do @pacmanLine.closeFigure(false)
+	do @pacmanLine.close()
 	
-	do @dc :: dc@makeDC(draw)
 	do draw.onPaint :: @onPaint
+	
+	do draw.paint()
 	while(wnd@act())
 	end while
 end func
 
 func onPaint(wnd: wnd@Wnd, width: int, height: int)
-	do @dc.beginDraw()
 	; k
-	do @dc.line(20.0, 20.0, 20.0, 100.0, 3.0, @pink)
-	do @dc.line(60.0, 40.0, 16.0, 80.0, 3.0, @pink)
-	do @dc.line(30.0, 77.0, 60.0, 100.0, 3.0, @pink)
+	do draw2d@line(20.0, 20.0, 20.0, 100.0, 3.0, @pink)
+	do draw2d@line(60.0, 40.0, 16.0, 80.0, 3.0, @pink)
+	do draw2d@line(30.0, 77.0, 60.0, 100.0, 3.0, @pink)
 	; u
-	do @dc.line(80.0, 50.0, 80.0, 100.0, 3.0, @pink)
-	do @dc.line(80.0, 98.5, 120.0, 98.5, 3.0, @pink)
-	do @dc.line(120.0, 100.0, 120.0, 50.0, 3.0, @pink)
+	do draw2d@line(80.0, 50.0, 80.0, 100.0, 3.0, @pink)
+	do draw2d@line(80.0, 98.5, 120.0, 98.5, 3.0, @pink)
+	do draw2d@line(120.0, 100.0, 120.0, 50.0, 3.0, @pink)
 	; i
-	do @dc.line(140.0, 40.0, 140.0, 100.0, 3.0, @pink)
+	do draw2d@line(140.0, 40.0, 140.0, 100.0, 3.0, @pink)
 	; n
-	do @dc.line(160.0, 50.0, 160.0, 100.0, 3.0, @pink)
-	do @dc.line(160.0, 51.5, 200.0, 51.5, 3.0, @pink)
-	do @dc.line(200.0, 50.0, 200.0, 100.0, 3.0, @pink)
+	do draw2d@line(160.0, 50.0, 160.0, 100.0, 3.0, @pink)
+	do draw2d@line(160.0, 51.5, 200.0, 51.5, 3.0, @pink)
+	do draw2d@line(200.0, 50.0, 200.0, 100.0, 3.0, @pink)
 	
-	do @dc.rect(250.0, 20.0, 100.0, 70.0, 0xFF5555FF)
-	do @dc.rectLine(280.0, 50.0, 100.0, 70.0, 4.0, 0xFF55FF55)
+	do draw2d@rect(250.0, 20.0, 100.0, 70.0, 0xFF5555FF)
+	do draw2d@rectLine(280.0, 50.0, 100.0, 70.0, 4.0, 0xFF55FF55)
 	
-	do @dc.circle(100.0, 250.0, 75.0, 75.0, 0xFFFFFF55)
-	do @dc.circleLine(300.0, 250.0, 75.0, 75.0, 7.0, 0xFFFF55FF)
+	do draw2d@circle(100.0, 250.0, 75.0, 75.0, 0xFFFFFF55)
+	do draw2d@circleLine(300.0, 250.0, 75.0, 75.0, 7.0, 0xFFFF55FF)
 	
-	do @dc.tri(400.0, 325.0, 475.0, 325.0 - 75.0 * lib@sqrt(3.0),
+	do draw2d@tri(400.0, 325.0, 475.0, 325.0 - 75.0 * lib@sqrt(3.0),
 	|550.0, 325.0, 0xFF7777FF)
 	
-	do @dc.geometry(@drum, 0xFF888844)
-	do @dc.geometry(@tower, 0xFFFF0000)
-	do @dc.geometry(@pacman, 0xFFF8F800)
-	do @dc.geometryLine(@pacmanLine, 0xFF000000, 3.0)
-	do @dc.endDraw()
+	do @drum.draw(0xFF888844)
+	do @tower.draw(0xFFFF0000)
+	do @pacman.draw(0xFFF8F800)
+	do @pacmanLine.drawLine(3.0, 0xFFFFFFFF)
+	do draw@render(0)
 end func
