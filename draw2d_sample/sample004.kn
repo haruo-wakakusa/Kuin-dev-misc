@@ -1,0 +1,61 @@
+var rectBrush: draw2d@BrushRadialGradient
+var rectBrush2: draw2d@BrushRadialGradient
+var rectBrush3: draw2d@BrushRadialGradient
+var ellipseBrush: draw2d@BrushRadialGradient
+var ellipseBrush2: draw2d@BrushRadialGradient
+
+func main()
+	var wnd: wnd@Wnd :: wnd@makeWnd(null, %aspect, 800, 600,
+	|"dcライブラリサンプル4")
+	var draw: wnd@Draw :: wnd@makeDraw(wnd, 0, 0, 800, 600,
+	|%scale, %scale, false)
+	
+	do @rectBrush :: draw2d@makeBrushRadialGradient(
+	|20.0, 20.0, 200.0, 200.0,
+	|[0.0, 1.0],
+	|[0xFF8888FF, 0xFF0000FF])
+	do @rectBrush2 :: draw2d@makeBrushRadialGradient(
+	|220.0, 20.0, 400.0, 200.0,
+	|[0.0, 1.0],
+	|[0xFFFFFFFF, 0xFF0000FF])
+	do @rectBrush3 :: draw2d@makeBrushRadialGradient(
+	|420.0, 20.0, 600.0, 200.0,
+	|[0.0, 1.0],
+	|[0xFF0000FF, 0xFFFFFFFF])
+	do @ellipseBrush :: draw2d@makeBrushRadialGradient(
+	|20.0, 220.0, 300.0, 400.0,
+	|@divide(0.0, 0.5, 7),
+	|[0xFFFF0000, 0xFFFFA500, 0xFFFFFF00, 0xFF008000,
+	|0xFF00FFFF, 0xFF0000FF, 0xFF800080])
+	do @ellipseBrush2 :: draw2d@makeBrushRadialGradient(
+	|320.0, 220.0, 600.0, 400.0,
+	|[0.0, 0.5],
+	|[0xFFFF0000, 0xFF00FF00])
+	do @ellipseBrush2.setGradientOriginOffset(-50.0, -50.0)
+	
+	do draw.onPaint :: @onPaint
+	do draw.paint()
+	while(wnd@act())
+	end while
+end func
+
+func divide(sx: float, ex: float, div: int): []float
+	var ary: []float :: #[div]float
+	do ary[0] :: sx
+	do ary[div - 1] :: ex
+	for i(1, div - 2)
+		do ary[i] :: sx + (ex - sx) * i $ float / (div - 1) $ float
+	end for
+	ret ary
+end func
+
+func onPaint(wnd: wnd@Wnd, width: int, height: int)
+	
+	do @rectBrush.rect(20.0, 20.0, 180.0, 180.0)
+	do @rectBrush2.rect(220.0, 20.0, 180.0, 180.0)
+	do @rectBrush3.rect(420.0, 20.0, 180.0, 180.0)
+	do @ellipseBrush.circle(160.0, 310.0, 140.0, 90.0)
+	do @ellipseBrush2.circle(460.0, 310.0, 140.0, 90.0)
+	
+	do draw@render(0)
+end func
