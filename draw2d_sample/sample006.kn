@@ -1,0 +1,58 @@
+var white: draw2d@BrushSolidColor
+
+func main()
+	var wnd: wnd@Wnd :: wnd@makeWnd(null, %aspect, 800, 600,
+	|"draw2dライブラリサンプル6")
+	var draw: wnd@Draw :: wnd@makeDraw(wnd, 0, 0, 800, 600,
+	|%scale, %scale, false)
+	
+	do @white :: draw2d@makeBrushSolidColor(0xFFFFFFFF)
+	
+	while(wnd@act())
+		var delta: float
+		if((draw@cnt() / 199) % 2 = 0)
+			do delta :: (draw@cnt() % 199 + 1) $ float
+		else
+			do delta :: (200 - draw@cnt() % 199) $ float
+		end if
+		
+		var ss1: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+		|%flat, %flat, %flat, %miterOrBevel, 1.0, %solid, 0.0, null)
+		do @white.drawLine(
+		|@path(20.0, 120.0, delta), 10.0, ss1)
+		
+		var ss2: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+		|%flat, %flat, %flat, %miterOrBevel, 5.0, %solid, 0.0, null)
+		do @white.drawLine(
+		|@path(20.0, 240.0, delta), 10.0, ss2)
+		
+		var ss3: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+		|%flat, %flat, %flat, %miterOrBevel, 10.0, %solid, 0.0, null)
+		do @white.drawLine(
+		|@path(20.0, 360.0, delta), 10.0, ss3)
+		
+		var ss4: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+		|%flat, %flat, %flat, %miterOrBevel, 20.0, %solid, 0.0, null)
+		do @white.drawLine(
+		|@path(20.0, 480.0, delta), 10.0, ss4)
+		
+		do draw@render(60)
+	end while
+end func
+
+func path(x0: float, y0: float, delta: float): draw2d@GeometryPath
+	var g: draw2d@GeometryPath :: draw2d@makeGeometryPath()
+	do g.open()
+	do g.openFigure(x0, y0, false)
+	do g.addLine(x0 + delta, y0 - 100.0)
+	var x: float :: x0 + 2.0 * delta
+	var endX: float :: 800.0 + 2.0 * delta
+	while(x <= endX)
+		do g.addLine(x, y0)
+		do g.addLine(x + delta, y0 - 100.0)
+		do x :: x + 2.0 * delta
+	end while
+	do g.closeFigure(false)
+	do g.close()
+	ret g
+end func

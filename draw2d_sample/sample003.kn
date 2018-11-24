@@ -11,7 +11,7 @@ var geo917: draw2d@GeometryPath
 
 func main()
 	var wnd: wnd@Wnd :: wnd@makeWnd(null, %aspect, 800, 600,
-	|"dcライブラリサンプル3")
+	|"draw2dライブラリサンプル3")
 	var draw: wnd@Draw :: wnd@makeDraw(wnd, 0, 0, 800, 600,
 	|%scale, %scale, false)
 	

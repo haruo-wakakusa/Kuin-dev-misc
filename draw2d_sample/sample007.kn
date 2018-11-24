@@ -1,0 +1,65 @@
+var white: draw2d@BrushSolidColor
+
+func main()
+	var wnd: wnd@Wnd :: wnd@makeWnd(null, %aspect, 800, 600,
+	|"draw2dライブラリサンプル7")
+	var draw: wnd@Draw :: wnd@makeDraw(wnd, 0, 0, 800, 600,
+	|%scale, %scale, false)
+	
+	do @white :: draw2d@makeBrushSolidColor(0xFFFFFFFF)
+	
+	do draw.onPaint :: @onPaint
+	do draw.paint()
+	while(wnd@act())
+	end while
+end func
+
+func onPaint(wnd: wnd@Wnd, width: int, height: int)
+	var ss1: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %solid, 0.0, null)
+	do @white.line(20.0, 20.0, 780.0, 20.0, 10.0, ss1)
+	var ss2: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %dash, 0.0, null)
+	do @white.line(20.0, 60.0, 780.0, 60.0, 10.0, ss2)
+	var ss3: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %square, %miter, 1.0, %dot, 0.0, null)
+	do @white.line(20.0, 100.0, 780.0, 100.0, 10.0, ss3)
+	var ss4: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %round, %miter, 1.0, %dashDot, 0.0, null)
+	do @white.line(20.0, 140.0, 780.0, 140.0, 10.0, ss4)
+	var ss5: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %triangle, %miter, 1.0, %dashDotDot, 0.0, null)
+	do @white.line(20.0, 180.0, 780.0, 180.0, 10.0, ss5)
+	
+	var ss6: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %custom, 0.0,
+	|[1.0, 1.0, 2.0, 3.0, 5.0, 8.0])
+	do @white.line(20.0, 260.0, 780.0, 260.0, 10.0, ss6)
+	var ss7: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %custom, 0.0,
+	|[3.0, 3.0, 7.0, 3.0, 3.0, 7.0])
+	do @white.line(20.0, 300.0, 780.0, 300.0, 10.0, ss7)
+	
+	var ss8: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %custom, 0.0,
+	|[5.0, 5.0])
+	do @white.line(20.0, 380.0, 780.0, 380.0, 10.0, ss8)
+	var ss9: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %custom, 3.0,
+	|[5.0, 5.0])
+	do @white.line(20.0, 420.0, 780.0, 420.0, 10.0, ss9)
+	var ss10: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %custom, 4.0,
+	|[5.0, 5.0])
+	do @white.line(20.0, 460.0, 780.0, 460.0, 10.0, ss10)
+	var ss11: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %custom, -3.0,
+	|[5.0, 5.0])
+	do @white.line(20.0, 500.0, 780.0, 500.0, 10.0, ss11)
+	var ss12: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %custom, -4.0,
+	|[5.0, 5.0])
+	do @white.line(20.0, 540.0, 780.0, 540.0, 10.0, ss12)
+	
+	do draw@render(0)
+end func

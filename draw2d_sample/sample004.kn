@@ -6,7 +6,7 @@ var ellipseBrush2: draw2d@BrushRadialGradient
 
 func main()
 	var wnd: wnd@Wnd :: wnd@makeWnd(null, %aspect, 800, 600,
-	|"dcライブラリサンプル4")
+	|"draw2dライブラリサンプル4")
 	var draw: wnd@Draw :: wnd@makeDraw(wnd, 0, 0, 800, 600,
 	|%scale, %scale, false)
 	

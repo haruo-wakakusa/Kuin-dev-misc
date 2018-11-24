@@ -1,0 +1,88 @@
+var white: draw2d@BrushSolidColor
+
+func main()
+	var wnd: wnd@Wnd :: wnd@makeWnd(null, %aspect, 800, 600,
+	|"draw2dライブラリサンプル5")
+	var draw: wnd@Draw :: wnd@makeDraw(wnd, 0, 0, 800, 600,
+	|%scale, %scale, false)
+	
+	do @white :: draw2d@makeBrushSolidColor(0xFFFFFFFF)
+	
+	do draw.onPaint :: @onPaint
+	do draw.paint()
+	while(wnd@act())
+	end while
+end func
+
+func path(x: float, y: float): draw2d@GeometryPath
+	var g: draw2d@GeometryPath :: draw2d@makeGeometryPath()
+	do g.open()
+	do g.openFigure(x, y, false)
+	do g.addLine(x + 120.0, y - 80.0)
+	do g.addLine(x + 240.0, y)
+	do g.addLine(x + 360.0, y - 80.0)
+	do g.closeFigure(false)
+	do g.close()
+	ret g
+end func
+
+func path2(x: float, y: float): draw2d@GeometryPath
+	var g: draw2d@GeometryPath :: draw2d@makeGeometryPath()
+	do g.open()
+	do g.openFigure(x, y, false)
+	do g.addLine(x + 20.0, y - 100.0)
+	do g.addLine(x + 40.0, y)
+	do g.addLine(x + 100.0, y - 100.0)
+	do g.addLine(x + 180.0, y)
+	do g.addLine(x + 300.0, y - 100.0)
+	do g.closeFigure(false)
+	do g.close()
+	ret g
+end func
+
+func onPaint(wnd: wnd@Wnd, width: int, height: int)
+	var ss1: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %solid, 0.0, null)
+	do @white.drawLine(@path(20.0, 100.0), 10.0, ss1)
+	var ss2: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%square, %square, %flat, %miter, 1.0, %solid, 0.0, null)
+	do @white.drawLine(@path(20.0, 125.0), 10.0, ss2)
+	var ss3: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%round, %round, %flat, %miter, 1.0, %solid, 0.0, null)
+	do @white.drawLine(@path(20.0, 150.0), 10.0, ss3)
+	var ss4: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%triangle, %triangle, %flat, %miter, 1.0, %solid, 0.0, null)
+	do @white.drawLine(@path(20.0, 175.0), 10.0, ss4)
+	
+	var ss5: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %dash, 0.0, null)
+	do @white.drawLine(@path(20.0, 225.0), 10.0, ss5)
+	var ss6: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %square, %miter, 1.0, %dash, 0.0, null)
+	do @white.drawLine(@path(20.0, 250.0), 10.0, ss6)
+	var ss7: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %round, %miter, 1.0, %dash, 0.0, null)
+	do @white.drawLine(@path(20.0, 275.0), 10.0, ss7)
+	var ss8: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %triangle, %miter, 1.0, %dash, 0.0, null)
+	do @white.drawLine(@path(20.0, 300.0), 10.0, ss8)
+	
+	var ss9: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miter, 1.0, %solid, 0.0, null)
+	do @white.drawLine(@path2(420.0, 120.0), 20.0, ss9)
+	do @white.rectLine(20.0, 350.0, 50.0, 50.0, 10.0, ss9)
+	var ss10: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %bevel, 1.0, %solid, 0.0, null)
+	do @white.drawLine(@path2(420.0, 240.0), 20.0, ss10)
+	do @white.rectLine(90.0, 350.0, 50.0, 50.0, 10.0, ss10)
+	var ss11: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %round, 1.0, %solid, 0.0, null)
+	do @white.drawLine(@path2(420.0, 360.0), 20.0, ss11)
+	do @white.rectLine(160.0, 350.0, 50.0, 50.0, 10.0, ss11)
+	var ss12: draw2d@StrokeStyle :: draw2d@makeStrokeStyle(
+	|%flat, %flat, %flat, %miterOrBevel, 1.0, %solid, 0.0, null)
+	do @white.drawLine(@path2(420.0, 480.0), 20.0, ss12)
+	do @white.rectLine(230.0, 350.0, 50.0, 50.0, 10.0, ss12)
+	
+	do draw@render(0)
+end func
