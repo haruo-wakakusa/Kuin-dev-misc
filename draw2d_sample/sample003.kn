@@ -112,6 +112,6 @@ func onPaint(wnd: wnd@Wnd, width: int, height: int)
 	do @icecreamBrush.draw(@icecream)
 	do @cornBrush.tri(50.0, 250.0, 250.0, 250.0, 150.0, 500.0)
 	
-	do @geo917Brush.drawLine(@geo917, 10.0)
+	do @geo917Brush.drawLine(@geo917, 10.0, null)
 	do draw@render(0)
 end func
